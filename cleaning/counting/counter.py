@@ -1,6 +1,7 @@
 import pandas as pd
 
 
+# Loads dictionaries with words to remove from the given path
 def load_dicts(path):
     dicts = []
 
@@ -13,6 +14,7 @@ def load_dicts(path):
     return dicts
 
 
+# Cleans wrong and non alphabetic words from the dataset
 def clean_words(dataset, wrong_words):
     dataset['bericht tekst'] = dataset['bericht tekst'].astype(str)
     dataset['bericht tekst'] = dataset['bericht tekst'].str.strip()
