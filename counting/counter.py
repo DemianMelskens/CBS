@@ -1,38 +1,46 @@
 import pandas as pd
 
-insta = pd.read_csv('../data/joined.csv', ';')
 
-dicts = []
+def load_dicts(path):
+    dicts = []
 
-with open('../data/stopwords-nl.txt', 'r') as f:
-    dicts.extend(f.read().splitlines())
+    with open(path + 'stopwords-nl.txt', 'r') as f:
+        dicts.extend(f.read().splitlines())
 
-with open('../data/stopwords-eng.txt', 'r') as f:
-    dicts.extend(f.read().splitlines())
+    with open(path + 'stopwords-eng.txt', 'r') as f:
+        dicts.extend(f.read().splitlines())
 
-insta['bericht tekst'] = insta['bericht tekst'].astype(str)
-insta['bericht tekst'] = insta['bericht tekst'].str.strip()
-insta['bericht tekst'] = insta['bericht tekst'].str.lower()
+    return dicts
 
-insta['bericht tekst'] = insta['bericht tekst'].replace(r',', '', regex=True)
-insta['bericht tekst'] = insta['bericht tekst'].replace('\.', '', regex=True)
 
-for word in dicts:
-    insta['bericht tekst'] = insta['bericht tekst'].replace('(?:^|\W)'+ word + '(?:$|\W)', ' ', regex=True)
+def clean_words(dataset, wrong_words):
+    dataset['bericht tekst'] = dataset['bericht tekst'].astype(str)
+    dataset['bericht tekst'] = dataset['bericht tekst'].str.strip()
+    dataset['bericht tekst'] = dataset['bericht tekst'].str.lower()
+
+    dataset['bericht tekst'] = dataset['bericht tekst'].replace(r',', '', regex=True)
+    dataset['bericht tekst'] = dataset['bericht tekst'].replace('\.', '', regex=True)
+
+    for i, row in dataset.iterrows():
+        words = row['bericht tekst'].split(' ')
+        clean_words = []
+        for word in words:
+            if word.isalpha() and not any(word in d for d in wrong_words):
+                clean_words.append(word)
+
+        dataset.at[i, 'bericht tekst'] = ' '.join(clean_words)
+
+    return dataset
+
+
+insta = clean_words(pd.read_csv('../data/joined.csv', ';'),
+                    load_dicts('../data/'))
 
 all_words = []
 
 for i, row in insta.iterrows():
-    words = row['bericht tekst'].split(' ')
-    all_words.extend(words)
+    all_words.extend(
+        row['bericht tekst'].split(' '))
 
-clean_words = []
-
-for word in all_words:
-    if word.isalpha():
-        clean_words.append(word.strip())
-
-clean_words = pd.Series(clean_words)
-print(clean_words.value_counts())
-
-# TODO: Keep only clean words in dataset
+all_words = pd.Series(all_words)
+print(all_words.value_counts())
