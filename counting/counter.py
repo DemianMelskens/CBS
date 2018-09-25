@@ -10,14 +10,6 @@ with open('../data/stopwords-nl.txt', 'r') as f:
 with open('../data/stopwords-eng.txt', 'r') as f:
     dicts.extend(f.read().splitlines())
 
-words_to_remove = []
-
-for word in dicts:
-    if word.isalpha():
-        words_to_remove.append(word)
-
-insta = pd.read_csv('../data/joined.csv', ';')
-
 insta['bericht tekst'] = insta['bericht tekst'].astype(str)
 insta['bericht tekst'] = insta['bericht tekst'].str.strip()
 insta['bericht tekst'] = insta['bericht tekst'].str.lower()
@@ -25,7 +17,7 @@ insta['bericht tekst'] = insta['bericht tekst'].str.lower()
 insta['bericht tekst'] = insta['bericht tekst'].replace(r',', '', regex=True)
 insta['bericht tekst'] = insta['bericht tekst'].replace('\.', '', regex=True)
 
-for word in words_to_remove:
+for word in dicts:
     insta['bericht tekst'] = insta['bericht tekst'].replace('(?:^|\W)'+ word + '(?:$|\W)', ' ', regex=True)
 
 all_words = []
