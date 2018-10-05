@@ -103,6 +103,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 /.idea/
-*.csv
 /data/stopwords-eng.txt
 /data/stopwords-nl.txt
+/.idea/
