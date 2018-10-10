@@ -31,7 +31,6 @@ def post_lines(header, lines):
     post(message)
 
 
-# lines = [line.rstrip('\n') for line in open('data.csv')]
 lines = []
 with open(DATA_FILE, "r", encoding='ANSI') as ins:
     for line in ins:

@@ -26,7 +26,7 @@ def callback(ch, method, properties, body):
 
     add_dataset(instagram)
 
-    print(" [x] Done cleaning post batch, amount of messages cleaned: " + str(counter))
+    print(" [x] Done cleaning post batch, amount of insta posts cleaned: " + str(counter))
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
