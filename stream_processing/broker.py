@@ -12,8 +12,9 @@ channel = connection.channel()
 channel.queue_declare(queue='cbs', durable=True)
 print(' [*] Waiting for messages. To exit press CTRL+C')
 
+
 def callback(ch, method, properties, body):
-    print(" [x] Received %r" % str(body))
+    print(" [x] Received post batch")
 
     csv = StringIO(body.decode('ANSI'))
     instagram = pd.read_csv(csv, delimiter=';')
@@ -21,7 +22,7 @@ def callback(ch, method, properties, body):
 
     add_dataset(instagram)
 
-    print(" [x] Done")
+    print(" [x] Done cleaning post batch")
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
