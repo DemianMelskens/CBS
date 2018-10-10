@@ -1,6 +1,8 @@
 import pika
 
-DATA_FILE = 'data.csv'
+DATA_FILE = 'data11.csv'
+LINES_PER_POST = 20
+
 
 def post(message):
     parameters = pika.URLParameters('amqp://lizhysux:AxmhoGtxjAMZZpn--k8O5n9-ttKp7WiK@raven.rmq.cloudamqp.com/lizhysux')
@@ -20,6 +22,15 @@ def post(message):
     connection.close()
 
 
+def post_lines(header, lines):
+    message = header
+
+    for line in lines:
+        message += '\n' + line
+
+    post(message)
+
+
 # lines = [line.rstrip('\n') for line in open('data.csv')]
 lines = []
 with open(DATA_FILE, "r", encoding='ANSI') as ins:
@@ -27,9 +38,16 @@ with open(DATA_FILE, "r", encoding='ANSI') as ins:
         lines.append(line)
 
 header = ''
+lines_to_send = []
 for idx, line in enumerate(lines):
     if idx == 0:
         header = line
         continue
 
-    post(header + '\n' + line)
+    lines_to_send.append(line)
+
+    if len(lines_to_send) >= LINES_PER_POST:
+        post_lines(header, lines_to_send)
+        lines_to_send = []
+
+post_lines(header, lines_to_send)
