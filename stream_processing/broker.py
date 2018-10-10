@@ -4,6 +4,7 @@ from io import StringIO
 from cleaner import clean_und_enrich
 from to_mongo import add_dataset
 
+counter = 0
 parameters = pika.URLParameters('amqp://lizhysux:AxmhoGtxjAMZZpn--k8O5n9-ttKp7WiK@raven.rmq.cloudamqp.com/lizhysux')
 
 connection = pika.BlockingConnection(parameters)
@@ -14,6 +15,9 @@ print(' [*] Waiting for messages. To exit press CTRL+C')
 
 
 def callback(ch, method, properties, body):
+    global counter
+    counter += 20
+
     print(" [x] Received post batch")
 
     csv = StringIO(body.decode('ANSI'))
@@ -22,7 +26,7 @@ def callback(ch, method, properties, body):
 
     add_dataset(instagram)
 
-    print(" [x] Done cleaning post batch")
+    print(" [x] Done cleaning post batch, amount of messages cleaned: " + str(counter))
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
