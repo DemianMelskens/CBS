@@ -16,16 +16,15 @@ print(' [*] Waiting for messages. To exit press CTRL+C')
 
 def callback(ch, method, properties, body):
     global counter
-    counter += 20
 
     print(" [x] Received post batch")
 
     csv = StringIO(body.decode('ANSI'))
     instagram = pd.read_csv(csv, delimiter=';')
     instagram = clean_und_enrich(instagram)
-
     add_dataset(instagram)
 
+    counter += instagram.__len__()
     print(" [x] Done cleaning post batch, amount of insta posts cleaned: " + str(counter))
     ch.basic_ack(delivery_tag=method.delivery_tag)
 

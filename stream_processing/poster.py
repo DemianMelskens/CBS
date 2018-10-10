@@ -1,6 +1,6 @@
 import pika
 
-DATA_FILE = 'data11.csv'
+DATA_FILE = 'data19.csv'
 LINES_PER_POST = 20
 
 
@@ -26,7 +26,7 @@ def post_lines(header, lines):
     message = header
 
     for line in lines:
-        message += '\n' + line
+        message += line
 
     post(message)
 
