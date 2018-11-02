@@ -16,6 +16,7 @@ def add_dataset(dataset):
             'sentiment': row['sentiment'],
             'discussielengte': row['discussielengte'],
             'views': row['views'],
+            'auteur': row['auteur'],
             'GPS breedtegraad': row['GPS breedtegraad'],
             'GPS lengtegraad': row['GPS lengtegraad'],
             'bericht tekst': row['bericht tekst'],
