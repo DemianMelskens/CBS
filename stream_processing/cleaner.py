@@ -130,6 +130,40 @@ def remove_emoji(data):
     return data
 
 
+# Loads dictionaries with words to remove from the given path
+def load_dicts(path):
+    dicts = []
+
+    with open(path + 'stopwords-nl.txt', 'r') as f:
+        dicts.extend(f.read().splitlines())
+
+    with open(path + 'stopwords-eng.txt', 'r') as f:
+        dicts.extend(f.read().splitlines())
+
+    return dicts
+
+
+# Cleans wrong and non alphabetic words from the dataset
+def clean_words(dataset, wrong_words):
+    dataset['bericht tekst'] = dataset['bericht tekst'].astype(str)
+    dataset['bericht tekst'] = dataset['bericht tekst'].str.strip()
+    dataset['bericht tekst'] = dataset['bericht tekst'].str.lower()
+
+    dataset['bericht tekst'] = dataset['bericht tekst'].replace(r',', '', regex=True)
+    dataset['bericht tekst'] = dataset['bericht tekst'].replace('\.', '', regex=True)
+
+    for i, row in dataset.iterrows():
+        words = row['bericht tekst'].split(' ')
+        clean_words = []
+        for word in words:
+            if word.isalpha() and not any(word in d for d in wrong_words):
+                clean_words.append(word)
+
+        dataset.at[i, 'bericht tekst'] = ' '.join(clean_words)
+
+    return dataset
+
+
 # Cleans invalid urls and enriches with like count, data utc, comment count and view count
 def clean_und_enrich(dataset):
     dataset = dataset.drop(['zoekopdracht', 'type', 'volgers', 'invloed', 'titel', 'type bron'], axis=1)
@@ -143,5 +177,6 @@ def clean_und_enrich(dataset):
     dataset = refresh_comment_count(dataset, posts_dict)
     dataset = refresh_views(dataset, posts_dict)
     dataset = isolate_hashtag(dataset)
+    dataset = clean_words(dataset, load_dicts('../data/'))
 
     return dataset
