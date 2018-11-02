@@ -69,16 +69,6 @@ def refresh_comment_count(dataset, posts_dict):
     return dataset
 
 
-# Refreshes view count
-def refresh_views(dataset, posts_dict):
-    for index, row in dataset.iterrows():
-        shortcode = row['url'].split('/')[-2]
-        if shortcode in posts_dict:
-            dataset.at[index, 'views'] = posts_dict[shortcode].likes
-
-    return dataset
-
-
 def improve_sentiment(dataset):
     dataset['sentiment'] = dataset['sentiment'].replace(np.nan, '0')
 
@@ -175,8 +165,7 @@ def clean_und_enrich(dataset):
     dataset = add_like_count_to_dataset(dataset, posts_dict)
     dataset = add_date_utc(dataset, posts_dict)
     dataset = refresh_comment_count(dataset, posts_dict)
-    dataset = refresh_views(dataset, posts_dict)
     dataset = isolate_hashtag(dataset)
-    dataset = clean_words(dataset, load_dicts('../data/'))
+    dataset = clean_words(dataset, load_dicts('../Visualization/data/'))
 
     return dataset
