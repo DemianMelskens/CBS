@@ -51,10 +51,10 @@ myclient = pymongo.MongoClient(
     "&retryWrites=true")
 cbs_db = myclient["cbs"]
 
-# df = pd.DataFrame(list(cbs_db["instagram"].find({"country":"France"})))
+# df = pd.DataFrame(list(cbs_db["instagram"].find({"country":"Deutschland"})))
 df = pd.DataFrame(list(cbs_db["instagram"].find()))
 del df['_id']
 
 print('Data loaded')
 
-count_hashtags(df)
+count_countries(df)

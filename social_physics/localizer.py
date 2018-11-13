@@ -51,7 +51,7 @@ while (True):
         cbs_db = myclient["cbs"]
         instagram = cbs_db["instagram"]
         df = pd.DataFrame(list(instagram.find({"town": {"$exists": False}}).limit(10)))
-        print('Next bacth')
+        print('Next batch')
         update_location(df)
     except Exception as e:
         print(e)
