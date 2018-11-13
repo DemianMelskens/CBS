@@ -45,10 +45,13 @@ def getplace(lat, lon):
 
 
 while (True):
-    myclient = pymongo.MongoClient(
-        "mongodb://cbs:GcAlY5l5yt2CHTacnq4F@devcluster-shard-00-00-ayh0j.mongodb.net:27017,devcluster-shard-00-01-ayh0j.mongodb.net:27017,devcluster-shard-00-02-ayh0j.mongodb.net:27017/test?ssl=true&replicaSet=DevCluster-shard-0&authSource=admin&retryWrites=true")
-    cbs_db = myclient["cbs"]
-    instagram = cbs_db["instagram"]
-    df = pd.DataFrame(list(instagram.find({"town": {"$exists": False}}).limit(10)))
-    print('Next bacth')
-    update_location(df)
+    try:
+        myclient = pymongo.MongoClient(
+            "mongodb://cbs:GcAlY5l5yt2CHTacnq4F@devcluster-shard-00-00-ayh0j.mongodb.net:27017,devcluster-shard-00-01-ayh0j.mongodb.net:27017,devcluster-shard-00-02-ayh0j.mongodb.net:27017/test?ssl=true&replicaSet=DevCluster-shard-0&authSource=admin&retryWrites=true")
+        cbs_db = myclient["cbs"]
+        instagram = cbs_db["instagram"]
+        df = pd.DataFrame(list(instagram.find({"town": {"$exists": False}}).limit(10)))
+        print('Next bacth')
+        update_location(df)
+    except Exception as e:
+        print(e)
