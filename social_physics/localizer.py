@@ -23,6 +23,7 @@ def update_location(data):
         newvalues = {"$set": {"town": town, "country": country}}
 
         instagram.update_one(myquery, newvalues)
+        print('Updated')
 
 
 def getplace(lat, lon):
@@ -60,7 +61,7 @@ while (True):
             "mongodb://cbs:GcAlY5l5yt2CHTacnq4F@devcluster-shard-00-00-ayh0j.mongodb.net:27017,devcluster-shard-00-01-ayh0j.mongodb.net:27017,devcluster-shard-00-02-ayh0j.mongodb.net:27017/test?ssl=true&replicaSet=DevCluster-shard-0&authSource=admin&retryWrites=true")
         cbs_db = myclient["cbs"]
         instagram = cbs_db["instagram"]
-        df = pd.DataFrame(list(instagram.find({"town": {"$exists": False}}).limit(1000)))
+        df = pd.DataFrame(list(instagram.find({"town": {"$exists": False}}).limit(1)))
         print(df.shape)
         df = df.sample(frac=1).reset_index(drop=True)
         print('Next batch')
@@ -68,3 +69,5 @@ while (True):
     except Exception as e:
         print(e)
         traceback.print_exc()
+        print('Waiting 10 seconds before trying again...')
+        sleep(10)
