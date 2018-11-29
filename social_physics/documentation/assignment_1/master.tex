@@ -1,0 +1,144 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{scrextend}
+\usepackage[acronym]{glossaries}
+\usepackage{tasks}
+\usepackage{amssymb}
+\addtokomafont{labelinglabel}{\sffamily}
+\textwidth = 470pt
+\marginparwidth = 0pt
+\oddsidemargin = 0pt
+
+\makeglossaries
+% abbreviations:
+\newacronym{cbs}{CBS}{Central Bureau of Statistics}
+\newacronym{gps}{GPS}{Global Positioning System}
+\newacronym{fhict}{FHICT}{Fontys Hogescholen ICT}
+
+\title{Social Physics On Instagram}
+\author{
+  Hendriks, Jandie\\
+  \and
+  Witlox, Timothy\\
+  \and
+  Kooijman, Jeroen\\
+  \and
+  Weijs, Thomas\\
+  \and
+  Theunissen, Ties\\
+  \and
+  Melskens, Demian\\
+}
+\date{November 2018}
+
+\begin{document}
+\maketitle
+\pagenumbering{gobble}
+\pagebreak
+\tableofcontents
+\pagebreak
+\pagenumbering{arabic}
+\section{Introduction}
+\subsection{Professional Task}
+This document serves as a research paper for the social physics course. The goal is to take a closer look at human behavior within the scope of our professional task. The aforementioned professional task consists of an analysis of the social media service Instagram. Using a data-set with information about public posts (\gls{gps}, likes, hashtags, etc.) we try to answer two questions within the professional task. Human behavior plays an important role in answering these questions. 
+\begin{enumerate}
+	\item \textit{Can we sort the posts into defined categories using machine learning?}
+	\item \textit{What information can be gathered based on the given \gls{gps} data?}
+\end{enumerate}
+\subsection{Human Behavior}
+This paper will first look at the broad subject that is social physics to define a research question for this paper. Two directions are available since both of our professional task questions contain social physics aspects as seen in section~\ref{sec:components}. Since the category part of the project has not been developed (as the machine learning is more complex than data visualization) we chose the \gls{gps} side of the project to focus on. Our research question based on this is as follows: \textit{"Why do people visit specific locations?"}.
+
+\section{Components} \label{sec:components}
+\subsection{Category}
+All categories used are based on what people decide to share, which gives human behavior a significant role in our project. The \gls{cbs} has provided us with these categories based on a study done aimed at Twitter. These categories came out as the most prominent when the posts gathered from this social media service were categorized. These categories could be changed if the results point to different labels and directions. This means that the behavior of the people that share posts influences our categories. What people choose to share on Instagram makes up our data-set.
+
+Since the Facebook leak last year some people might be more careful with sharing their data. Another side where human behavior is introduced is with advertisements. These are personalized based on the behavior of the user.
+\subsection{Location}
+Where people go, take pictures and post these pictures is of course also an important part of human behavior. This \gls{gps} data is interesting for the \gls{cbs} as this gives an insight in the human behavior of the dutch people. 
+
+\section{Strategies}
+\textit{The sources used are based on the \gls{fhict} research framework (Triangulation: FIELD – LIBRARY – WORKSHOP – SHOWROOM – LAB).}
+\begin{labeling}{Library}
+    \item[\textbf{Lab}] Trying out the different machine learning algorithms and visualizing the results.
+    \item[\textbf{Showroom}] We present results to each other within the professional task and give feedback.
+    \item[\textbf{Showroom}] We present our findings to our employer at \gls{cbs} and use the feedback to further our project.
+    \item[\textbf{Library}] We use the internet to research the different algorithms available for machine learning.
+\end{labeling}
+
+\section{Research}
+\subsection{What are the most visited locations based on Instagram posts?}
+The Instagram data we gather contains latitude and longitude coordinates. With these features we can enrich the data with information about the country and city where the picture is taken. This way we can collect all the Instagram posts that are posted on a single city or country. Then these posts can be compared with each other to create insights about why people would like to go to a specific city or country.\\\\
+The first step that needs to be taken is to add all the necessary information to the data-set. Because all the data is hosted on a central MongoDB cloud cluster this can be done without cleaning all the data again. First all the data that is not yet updated is retrieved in batches from the database. After that a Python library named "geopy" is used to retrieve the city and country names from the coordinates. The results that are retrieved from the geopy library are then checked for errors and updated in the database.\\\\
+Once the database is updated with all the location information we can start doing research. This is done by downloading all the data from the database. This data is then analyzed to find out what the most occurring countries are. The most visited countries according to the data that was collected from Instagram are:
+
+\begin{tasks}[counter-format={tsk[1].}, label-align=left, label-offset={0mm}, label-width={5mm}, item-indent={5mm}, label-format={\bfseries}, column-sep=10mm](4)
+\task The Netherlands
+\task Belgium
+\task France
+\task Germany
+\task USA
+\task Brazil
+\task Italy
+\task UK
+\task Spain
+\task Indonesia
+\end{tasks}
+
+\subsection{What are the reasons for people to go to these places?}
+The most visited countries according to the collected Instagram posts are now known. The next step is to find out why people go to these places. Because most people provide hash-tags that describe what they are posting it could be interesting to analyze those hash-tags for every country. If there is enough data for one country this research could go even further and finding the reasons why people go to specific towns or cities within a country would be possible.\\\\
+The next step is to go through the previously found countries and analyze which hash-tags are the most common for a given country. This research will be done for the top 3 countries that are not The Netherlands. These countries are; Belgium, France and Germany.
+
+\subsubsection{Most common hash-tags in Belgium}
+\begin{tasks}[counter-format={tsk[1].}, label-align=left, label-offset={0mm}, label-width={5mm}, item-indent={5mm}, label-format={\bfseries}, column-sep=10mm](4)
+\task Deurne
+\task Antwerpen
+\task Belgium
+\task Maastricht
+\task Antwerp
+\task Belgie
+\task Carre
+\task Brussels
+\task Limburg
+\task Gent
+\end{tasks}
+Looking at the most used hash-tags in Belgium, people are mostly interested in posting about the cities and towns they visit and less about other things.
+
+
+\subsubsection{Most common hash-tags in France}
+\begin{tasks}[counter-format={tsk[1].}, label-align=left, label-offset={0mm}, label-width={5mm}, item-indent={5mm}, label-format={\bfseries}, column-sep=10mm](4)
+\task Carre
+\task Paris
+\task Zadkine
+\task Lisse
+\task Brilliant
+\task France
+\task Coiffure
+\task Cheveux
+\task Art
+\task Sculpture
+\end{tasks}
+These are probably the best results. It's clear that people probably go to Paris because they want to photograph art, to be more specific art at the Zadkine museum which seems to be popular according to the hash-tags.
+
+
+\subsubsection{Most common hash-tags in Germany}
+\begin{tasks}[counter-format={tsk[1].}, label-align=left, label-offset={0mm}, label-width={5mm}, item-indent={5mm}, label-format={\bfseries}, column-sep=10mm](4)
+\task Germany
+\task Amsterdam
+\task Berlin
+\task Heino
+\task Instagood
+\task Holland
+\task Travel
+\task Love
+\task Photography
+\task Nature
+\end{tasks}
+The hash-tags posted in Germany are more random, these are also about cities like Berlin but also about Amsterdam which has little to do with Germany. Other tags that are common like travel, photography and nature do describe a bit better why people would like to post about Germany.
+
+\section{Conclusion}
+Looking at the results it is possible to find out why people go to specific countries or locations. But it is important to have lots of data. This because the results may seem random when looking at the countries themselves. It is possible that the results will be a lot more specific if the possibility exists to look at the cities or even districts within cities. But this was not possible witch the currently collected data because of the amount of data. The obtained results are a summary of about 160 thousand cleaned Instagram posts.
+
+\pagebreak
+\printglossary[type=\acronymtype,title=\section{Abbreviations}]
+
+\end{document}
