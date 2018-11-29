@@ -45,7 +45,7 @@ def migrate_posts(amount):
         "devcluster-shard-00-02-ayh0j.mongodb.net:27017/test?ssl=true&replicaSet=DevCluster-shard-0&authSource=admin"
         "&retryWrites=true")["cbs"]["instagram"]
 
-    posts = cbs_db_cloud.find({"migrated": {"$exists": False}}).limit(amount)
+    posts = cbs_db_cloud.find({"$and": [{"migrated": {"$exists": False}}, {"town": {"$exists": True}}]}).limit(amount)
 
     for post in posts:
         newPost = copy.deepcopy(post)
