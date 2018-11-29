@@ -1,7 +1,7 @@
 import pika
 
-DATA_FILE = './raw_data/Coosto_berichten10.csv'
-LINES_PER_POST = 100
+DATA_FILE = 'Coosto_berichten (10).csv'
+LINES_PER_POST = 50
 
 
 def post(message):
