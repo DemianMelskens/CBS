@@ -105,3 +105,5 @@ venv.bak/
 /.idea/
 *.csv
 downloader/pics/
+*.npy
+*.joblib
