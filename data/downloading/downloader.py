@@ -48,5 +48,5 @@ def download_insta_images(csv_file, download_path):
 
 # Example
 download_insta_images(
-    csv_file='../data/Coosto_berichten.csv',
+    csv_file='./Coosto_berichten.csv',
     download_path='./pics/')
