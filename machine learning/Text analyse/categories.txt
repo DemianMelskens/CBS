@@ -1,21 +1,18 @@
-entertainment
-location
-sports
-nature
-arts
-party
-adventure
-movies
-food
-school
-music
-cardriving
-work
-culture
-living
-traveling
-items
-selfie
-animals
-medical
-advertisement
+Economy =1, 
+Education =2, 
+Environment =3, 
+Events =4, 
+Health =5, 
+Holiday =6, 
+ICT =7,
+Living =8, 
+Media =9, 
+Politics =10, 
+Relations =11, 
+Security =12, 
+Spare time =13, 
+Sports =14, 
+Transport =15, 
+Weather =16, 
+Work =17, 
+Other = 18
